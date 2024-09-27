@@ -17,16 +17,18 @@ public abstract class ChessMan{
     String name;
     public int i, j, x, y;
     public boolean button;
+    public boolean isWhite;
     public int value;
     ArrayList<Pair> moves = new ArrayList<>();
     ArrayList<NextMove> nextMoves = new ArrayList<>();
 
-    public ChessMan(GamePanel panel, int x, int y){
+    public ChessMan(GamePanel panel, int x, int y, boolean isWhite){
         this.panel = panel;
         this.i = (y / panel.tileSize) - 2;
         this.j = (x / panel.tileSize) - 4;
         this.x = x;
         this.y = y;
+        this.isWhite = isWhite;
         setValue();
         panel.Board[i][j] = this.value;
         setImageName();
