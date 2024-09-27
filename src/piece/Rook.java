@@ -4,15 +4,15 @@ import main.GamePanel;
 import pair.Pair;
 
 public class Rook extends ChessMan {
-    public Rook(GamePanel panel, int x, int y) {
-        super(panel, x, y);
+    public Rook(GamePanel panel, int x, int y, boolean isWhite) {
+        super(panel, x, y, isWhite);
     }
 
     @Override
     public void setImageName() {
-        this.name = "White_Rook";
+        if (isWhite) this.name = "White_Rook";
+        else this.name = "Black_Rook";
     }
-
     @Override
     public void setValue() {
         this.value = 5;
