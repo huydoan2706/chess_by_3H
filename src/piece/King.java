@@ -5,13 +5,14 @@ import main.Panel;
 import pair.Pair;
 
 public class King extends ChessMan{
-    public King(GamePanel panel, int x, int y) {
-        super(panel, x, y);
+    public King(GamePanel panel, int x, int y, boolean isWhite) {
+        super(panel, x, y, isWhite);
     }
 
     @Override
     public void setImageName() {
-        this.name = "White_King";
+        if(isWhite) this.name = "White_King";
+        else this.name = "Black_King";
     }
 
     @Override

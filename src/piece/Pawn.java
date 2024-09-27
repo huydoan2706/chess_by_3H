@@ -4,15 +4,15 @@ import main.GamePanel;
 import pair.Pair;
 
 public class Pawn extends ChessMan {
-    public Pawn(GamePanel panel, int x, int y) {
-        super(panel, x, y);
+    public Pawn(GamePanel panel, int x, int y, boolean isWhite) {
+        super(panel, x, y, isWhite);
     }
 
     @Override
     public void setImageName() {
-        this.name = "White_Pawn";
+        if (isWhite) this.name = "White_Pawn";
+        else this.name = "Black_Pawn";
     }
-
     @Override
     public void setValue() {
         this.value = 1;
