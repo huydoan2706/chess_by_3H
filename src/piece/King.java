@@ -1,49 +1,85 @@
-package piece;
+package  piece;
 
+import button.NextMove;
 import main.GamePanel;
 import main.Panel;
 import pair.Pair;
 
-public class King extends ChessMan{
-    public King(GamePanel panel, int x, int y) {
-        super(panel, x, y);
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public abstract class ChessMan{
+    GamePanel panel;
+    BufferedImage image;
+    String name;
+    public int i, j, x, y;
+    public boolean button;
+    public boolean isWhite;
+    public int value;
+    ArrayList<Pair> moves = new ArrayList<>();
+    ArrayList<NextMove> nextMoves = new ArrayList<>();
+
+    public ChessMan(GamePanel panel, int x, int y, boolean isWhite){
+        this.panel = panel;
+        this.i = (y / panel.tileSize) - 2;
+        this.j = (x / panel.tileSize) - 4;
+        this.x = x;
+        this.y = y;
+        this.isWhite = isWhite;
+        setValue();
+        panel.Board[i][j] = this.value;
+        setImageName();
+        getImage();
     }
 
-    @Override
-    public void setImageName() {
-        this.name = "White_King";
+    public abstract void setValue();
+    public abstract void setImageName();
+
+    public void getImage(){
+        try {
+            image = ImageIO.read((getClass().getResourceAsStream("/image/" + name + ".png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void setValue() {
-        this.value = 1000;
+    public abstract void functionUpdate();
+    public void update(){
+        if (panel.mouseHandles[i][j].click) {
+            this.button = true;
+            functionUpdate();
+            for (Pair<Integer, Integer> move : moves) {
+                nextMoves.add(new NextMove(this.panel, move.first, move.second, panel.tileSize, panel.tileSize));
+            }
+            panel.mouseHandles[i][j].click = false;
+        }
+        if(button){
+            for (NextMove move : nextMoves){
+                move.update();
+                if (move.button){
+                    panel.Board[i][j] = 0;
+                    this.x = move.x;
+                    this.y = move.y;
+                    this.j = (this.x / panel.tileSize) - 4;
+                    this.i = (this.y / panel.tileSize) - 2;
+                    panel.Board[i][j] = panel.turn * value;
+                    panel.mouseHandles[i][j].click = false;
+                    this.button = false;
+                    nextMoves = new ArrayList<>();
+                    moves = new ArrayList<>();
+                    break;
+                }
+            }
+        }
     }
 
-    @Override
-    public void functionUpdate() {
-        if (this.x + this.panel.tileSize < 12 * panel.tileSize) {
-            moves.add(new Pair<>(this.x + this.panel.tileSize, this.y));
-        }
-        if(this.y + this.panel.tileSize < 10 * panel.tileSize) {
-            moves.add(new Pair<>(this.x, this.y + this.panel.tileSize));
-        }
-        if(this.x + this.panel.tileSize < 12 * panel.tileSize && this.y + this.panel.tileSize < 10 * panel.tileSize) {
-            moves.add(new Pair<>(this.x + this.panel.tileSize, this.y + this.panel.tileSize));
-        }
-        if(this.x - this.panel.tileSize > 3 * panel.tileSize){
-            moves.add(new Pair<>(this.x - this.panel.tileSize, this.y));
-        }
-        if(this.y - this.panel.tileSize > 1 * panel.tileSize){
-            moves.add(new Pair<>(this.x, this.y - this.panel.tileSize));
-        }
-        if(this.x - this.panel.tileSize > 3 * panel.tileSize && this.y - this.panel.tileSize > 1 * panel.tileSize){
-            moves.add(new Pair<>(this.x - this.panel.tileSize, this.y - this.panel.tileSize));
-        }
-        if(this.x + this.panel.tileSize < 12 * panel.tileSize  && this.y - this.panel.tileSize > 1 * panel.tileSize){
-            moves.add(new Pair<>(this.x + this.panel.tileSize, this.y - this.panel.tileSize));
-        }
-        if(this.x - this.panel.tileSize > 3 * panel.tileSize && this.y + this.panel.tileSize < 10 * panel.tileSize){
-            moves.add(new Pair<>(this.x - this.panel.tileSize, this.y + this.panel.tileSize));
+    public void draw(Graphics2D g2D) {
+        g2D.drawImage(image, x, y, panel.tileSize, panel.tileSize, null);
+        for (NextMove move : nextMoves){
+            move.draw(g2D);
         }
     }
 }
