@@ -19,12 +19,23 @@ public class Pawn extends ChessMan {
     }
     @Override
     public void functionUpdate() {
-        if (this.y == 8 * this.panel.tileSize){
-            moves.add(new Pair<>(this.x, this.y - this.panel.tileSize));
-            moves.add(new Pair<>(this.x, this.y - 2 * this.panel.tileSize));
+        if (isWhite) {
+            if (this.y == 8 * this.panel.tileSize){
+                moves.add(new Pair<>(this.x, this.y - this.panel.tileSize));
+                moves.add(new Pair<>(this.x, this.y - 2 * this.panel.tileSize));
+            }
+            else if (this.y > 2 * this.panel.tileSize){
+                moves.add(new Pair<>(this.x, this.y - this.panel.tileSize));
+            }
         }
-        else if (this.y > 2 * this.panel.tileSize){
-            moves.add(new Pair<>(this.x, this.y - this.panel.tileSize));
+        else {
+            if (this.y == 3 * this.panel.tileSize){
+                moves.add(new Pair<>(this.x, this.y + this.panel.tileSize));
+                moves.add(new Pair<>(this.x, this.y + 2 * this.panel.tileSize));
+            }
+            else if (this.y < 9 * this.panel.tileSize){
+                moves.add(new Pair<>(this.x, this.y + this.panel.tileSize));
+            }
         }
     }
 }
