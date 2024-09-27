@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GamePanel extends Panel {
     MenuButton menuButton;
@@ -16,12 +17,7 @@ public class GamePanel extends Panel {
 
     public MouseHandle [][] mouseHandles = new MouseHandle[8][8];
 
-    King king;
-    Rook rook1, rook2;
-    Queen queen;
-    Bishop bishop1, bishop2;
-    Knight knight1, knight2;
-    Pawn pawn1, pawn2, pawn3, pawn4, pawn5, pawn6, pawn7, pawn8;
+    ArrayList<ChessMan> chessManArrayList ;
 
     public GamePanel(Frame frame) {
         super(frame);
@@ -33,22 +29,40 @@ public class GamePanel extends Panel {
                 this.addMouseListener(mouseHandles[i][j]);
             }
         }
-        this.king = new King(this, 8 * tileSize,  9 * tileSize);
-        this.queen = new Queen(this, 7 * tileSize,  9 * tileSize);
-        this.rook1 = new Rook(this, 4 * tileSize,  9 * tileSize);
-        this.rook2 = new Rook(this, 11 * tileSize,  9 * tileSize);
-        this.bishop1 = new Bishop(this, 6 * tileSize,  9 * tileSize);
-        this.bishop2 = new Bishop(this, 9 * tileSize,  9 * tileSize);
-        this.knight1 = new Knight(this, 5 * tileSize,  9 * tileSize);
-        this.knight2 = new Knight(this, 10 * tileSize,  9 * tileSize);
-        this.pawn1 = new Pawn(this, 4 * tileSize,  8 * tileSize);
-        this.pawn2 = new Pawn(this, 5 * tileSize,  8 * tileSize);
-        this.pawn3 = new Pawn(this, 6 * tileSize,  8 * tileSize);
-        this.pawn4 = new Pawn(this, 7 * tileSize,  8 * tileSize);
-        this.pawn5 = new Pawn(this, 8 * tileSize,  8 * tileSize);
-        this.pawn6 = new Pawn(this, 9 * tileSize,  8 * tileSize);
-        this.pawn7 = new Pawn(this, 10 * tileSize,  8 * tileSize);
-        this.pawn8 = new Pawn(this, 11 * tileSize,  8 * tileSize);
+        chessManArrayList = new ArrayList<>();
+        chessManArrayList.add(new King(this, 8 * tileSize,  9 * tileSize, true));
+        chessManArrayList.add(new Queen(this, 7 * tileSize,  9 * tileSize, true));
+        chessManArrayList.add(new Rook(this, 4 * tileSize,  9 * tileSize, true));
+        chessManArrayList.add(new Rook(this, 11 * tileSize,  9 * tileSize, true));
+        chessManArrayList.add(new Bishop(this, 6 * tileSize,  9 * tileSize, true));
+        chessManArrayList.add(new Bishop(this, 9 * tileSize,  9 * tileSize, true));
+        chessManArrayList.add(new Knight(this, 5 * tileSize,  9 * tileSize, true));
+        chessManArrayList.add(new Knight(this, 10 * tileSize,  9 * tileSize, true));
+        chessManArrayList.add(new Pawn(this, 4 * tileSize,  8 * tileSize, true));
+        chessManArrayList.add(new Pawn(this, 5 * tileSize,  8 * tileSize, true));
+        chessManArrayList.add(new Pawn(this, 6 * tileSize,  8 * tileSize, true));
+        chessManArrayList.add(new Pawn(this, 7 * tileSize,  8 * tileSize, true));
+        chessManArrayList.add(new Pawn(this, 8 * tileSize,  8 * tileSize, true));
+        chessManArrayList.add(new Pawn(this, 9 * tileSize,  8 * tileSize, true));
+        chessManArrayList.add(new Pawn(this, 10 * tileSize,  8 * tileSize, true));
+        chessManArrayList.add(new Pawn(this, 11 * tileSize,  8 * tileSize, true));
+
+        chessManArrayList.add(new King(this, 8 * tileSize,  2 * tileSize, false));
+        chessManArrayList.add(new Queen(this, 7 * tileSize,  2 * tileSize, false));
+        chessManArrayList.add(new Rook(this, 4 * tileSize,  2 * tileSize, false));
+        chessManArrayList.add(new Rook(this, 11 * tileSize,  2 * tileSize, false));
+        chessManArrayList.add(new Bishop(this, 6 * tileSize,  2 * tileSize, false));
+        chessManArrayList.add(new Bishop(this, 9 * tileSize,  2 * tileSize, false));
+        chessManArrayList.add(new Knight(this, 5 * tileSize,  2 * tileSize, false));
+        chessManArrayList.add(new Knight(this, 10 * tileSize,  2 * tileSize, false));
+        chessManArrayList.add(new Pawn(this, 4 * tileSize,  3 * tileSize, false));
+        chessManArrayList.add(new Pawn(this, 5 * tileSize,  3 * tileSize, false));
+        chessManArrayList.add(new Pawn(this, 6 * tileSize,  3 * tileSize, false));
+        chessManArrayList.add(new Pawn(this, 7 * tileSize,  3 * tileSize, false));
+        chessManArrayList.add(new Pawn(this, 8 * tileSize,  3 * tileSize, false));
+        chessManArrayList.add(new Pawn(this, 9 * tileSize,  3 * tileSize, false));
+        chessManArrayList.add(new Pawn(this, 10 * tileSize,  3 * tileSize, false));
+        chessManArrayList.add(new Pawn(this, 11 * tileSize,  3 * tileSize, false));
         getImage();
     }
 
@@ -64,23 +78,10 @@ public class GamePanel extends Panel {
     @Override
     public void update(){
         menuButton.update();
-        king.update();
-        queen.update();
-        rook1.update();
-        rook2.update();
-        bishop1.update();
-        bishop2.update();
-        knight1.update();
-        knight2.update();
-        pawn1.update();
-        pawn2.update();
-        pawn3.update();
-        pawn4.update();
-        pawn5.update();
-        pawn6.update();
-        pawn7.update();
-        pawn8.update();
-        System.out.println(Board[2][2]);
+        for(ChessMan chessMan : chessManArrayList) {
+            chessMan.update();
+        }
+        //System.out.println(Board[2][2]);
     }
 
     @Override
@@ -95,22 +96,9 @@ public class GamePanel extends Panel {
                 g2D.drawImage(queue, (j + 12) * tileSize, i * tileSize, tileSize, tileSize, null);
             }
         }
-        king.draw(g2D);
-        queen.draw(g2D);
-        rook1.draw(g2D);
-        rook2.draw(g2D);
-        bishop1.draw(g2D);
-        bishop2.draw(g2D);
-        knight1.draw(g2D);
-        knight2.draw(g2D);
-        pawn1.draw(g2D);
-        pawn2.draw(g2D);
-        pawn3.draw(g2D);
-        pawn4.draw(g2D);
-        pawn5.draw(g2D);
-        pawn6.draw(g2D);
-        pawn7.draw(g2D);
-        pawn8.draw(g2D);
+        for(ChessMan chessMan : chessManArrayList) {
+            chessMan.draw(g2D);
+        }
         g2D.dispose();
     }
 }
