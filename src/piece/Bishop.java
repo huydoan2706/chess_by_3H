@@ -4,15 +4,15 @@ import main.GamePanel;
 import pair.Pair;
 
 public class Bishop extends ChessMan {
-    public Bishop(GamePanel panel, int x, int y) {
-        super(panel, x, y);
+    public Bishop(GamePanel panel, int x, int y, boolean isWhile) {
+        super(panel, x, y, isWhile);
     }
 
     @Override
     public void setImageName() {
-        this.name = "White_Bishop";
+        if (isWhite) this.name = "White_Bishop";
+        else this.name = "Black_Bishop";
     }
-
     @Override
     public void setValue() {
         this.value = 3;
