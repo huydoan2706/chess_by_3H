@@ -4,15 +4,15 @@ import main.GamePanel;
 import pair.Pair;
 
 public class Queen extends ChessMan {
-    public Queen(GamePanel panel, int x, int y) {
-        super(panel, x, y);
+    public Queen(GamePanel panel, int x, int y, boolean isWhite) {
+        super(panel, x, y, isWhite);
     }
 
     @Override
     public void setImageName() {
-        this.name = "White_Queen";
+        if (isWhite) this.name = "White_Queen";
+        else this.name = "Black_Queen";
     }
-
     @Override
     public void setValue() {
         this.value = 9;
